@@ -5,7 +5,9 @@ on:
     branches: ["main"]
   release:
     types: ["published"]
-
+  workflow_dispatch:
+    branches: ["745"]
+    
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,15 +21,15 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-          username: "${{ secrets.DH_USER }}"
-          password: "${{ secrets.DH_PASS }}"
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: "hargata"
-          password: "${{ secrets.GHCR_PAT }}"
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker Metadata
         id: meta
@@ -35,11 +37,12 @@ jobs:
         with:
           context: workflow
           images: |
-            hargata/lubelogger
-            ghcr.io/hargata/lubelogger
+            ${{ secrets.DOCKERHUB_USERNAME }}/lubelogger
+            ghcr.io/${{ github.actor }}/lubelogger
           tags: |
             type=edge,branch=main
             type=ref,event=tag
+            type=devel,branch=745
 
       - name: Build and push
         uses: docker/build-push-action@v5
