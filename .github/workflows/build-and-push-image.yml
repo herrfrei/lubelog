@@ -43,7 +43,7 @@ jobs:
           context: workflow
           images: |
             ${{ secrets.DOCKERHUB_USERNAME }}/lubelogger
-            ghcr.io/${{ github.actor }}/lubelogger
+            ghcr.io/${{ github.actor }}/lubelog
           tags: |
             type=edge,branch=main
             type=ref,event=tag
