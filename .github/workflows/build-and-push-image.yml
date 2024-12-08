@@ -2,11 +2,12 @@ name: Build and Push Image to Dockerhub and GHCR
 
 on:
   push:
-    branches: ["main"]
+    branches: 
+    - main
+    - Hargata/745
   release:
     types: ["published"]
   workflow_dispatch:
-    branches: ["Hargata/745"]
     
 jobs:
   build:
