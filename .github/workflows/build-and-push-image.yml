@@ -43,7 +43,7 @@ jobs:
           tags: |
             type=edge,branch=main
             type=ref,event=tag
-            type=devel,branch=745
+            type=ref,branch=745
 
       - name: Build and push
         uses: docker/build-push-action@v5
